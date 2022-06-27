@@ -20,7 +20,6 @@ const data = [{ "_id": "398418001ph1a", "created": 1572880698375, "utm_source": 
 
 function fechas(init_date, end_date, by) {
     let result = {};
-    let usuarios = [];
     const fech = new Date(init_date);
     const fech2 = new Date(end_date);
     let tmp = init_date;
@@ -29,21 +28,22 @@ function fechas(init_date, end_date, by) {
         switch (by) {
             case "day":
                 //recorre todas las fechas posibles dentro del rango
-                while (tmp < end_date) {
+                while (tmp <= end_date) {
                     //recorre el arreglo en busca de fechas
-                    while (i < data.length - 1) {
+                    while (i <= data.length) {
+                        let usuarios = [];
                         //buscar dentro del arreglo donde el atributo fecha.created sea igual a la fecha temporal
-                        let fecha = data.filter(data => init_date < data.created < end_date);
-                        if (tmp <= end_date) {
+                        if (tmp < end_date) {
+                            let fecha = data.filter(data => init_date < data.created < end_date);
+                            let id = fecha[i]._id;
                             if (fecha[i]) {
-                                let id = fecha[i]._id;
                                 usuarios.push(id);
                             }
                         }
-                        i++;  
+                        i++;
+                        result[tmp] = usuarios;
+                        tmp += 86400000;
                     }
-                    result[`day${i}`] = usuarios;
-                    tmp += 86400000;
                     console.log(result);
                     return result;
                 }
@@ -51,58 +51,76 @@ function fechas(init_date, end_date, by) {
                 console.log(`Fecha Inicial: ${fech} Fecha Final: ${fech2}`);
                 break;
             case "week":
-                while (tmp <= end_date) {
-                    while (i <= data.length - 1) {
-                        let fecha = data.filter(data => data.created === tmp);
-                        if (tmp <= end_date) {
+                //recorre todas las fechas posibles dentro del rango
+                while (tmp < end_date) {
+                    //recorre el arreglo en busca de fechas
+                    while (i < data.length) {
+                        let usuarios = [];
+                        //buscar dentro del arreglo donde el atributo fecha.created sea igual a la fecha temporal
+                        if (tmp < end_date) {
+                            let fecha = data.filter(data => init_date < data.created < end_date);
+                            let id = fecha[i]._id;
                             if (fecha[i]) {
-                                let id = fecha[i]._id;
                                 usuarios.push(id);
                             }
                         }
                         i++;
-                        result[`day${i}`] = usuarios;
+                        result[tmp] = usuarios;
+                        tmp += 86400000 * 7;
                     }
-                    tmp += 86400000;
                     console.log(result);
+                    return result;
                 }
+                console.log(result);
                 console.log(`Fecha Inicial: ${fech} Fecha Final: ${fech2}`);
                 break;
 
             case "month":
-                while (tmp <= end_date) {
-                    while (i <= data.length - 1) {
-                        let fecha = data.filter(data => data.created === tmp);
-                        if (tmp <= end_date) {
+                //recorre todas las fechas posibles dentro del rango
+                while (tmp < end_date) {
+                    //recorre el arreglo en busca de fechas
+                    while (i < data.length) {
+                        let usuarios = [];
+                        //buscar dentro del arreglo donde el atributo fecha.created sea igual a la fecha temporal
+                        if (tmp < end_date) {
+                            let fecha = data.filter(data => init_date < data.created < end_date);
+                            let id = fecha[i]._id;
                             if (fecha[i]) {
-                                let id = fecha[i]._id;
                                 usuarios.push(id);
                             }
                         }
                         i++;
-                        result[`day${i}`] = usuarios;
+                        result[tmp] = usuarios;
+                        tmp += 86400000 * 7 * 30;
                     }
-                    tmp += 86400000;
                     console.log(result);
+                    return result;
                 }
+                console.log(result);
                 console.log(`Fecha Inicial: ${fech} Fecha Final: ${fech2}`);
                 break;
             default:
-                while (tmp <= end_date) {
-                    while (i <= data.length - 1) {
-                        let fecha = data.filter(data => data.created === tmp);
-                        if (tmp <= end_date) {
+                //recorre todas las fechas posibles dentro del rango
+                while (tmp < end_date) {
+                    //recorre el arreglo en busca de fechas
+                    while (i < data.length) {
+                        let usuarios = [];
+                        //buscar dentro del arreglo donde el atributo fecha.created sea igual a la fecha temporal
+                        if (tmp < end_date) {
+                            let fecha = data.filter(data => init_date < data.created < end_date);
+                            let id = fecha[i]._id;
                             if (fecha[i]) {
-                                let id = fecha[i]._id;
                                 usuarios.push(id);
                             }
                         }
                         i++;
-                        result[`day${i}`] = usuarios;
+                        result[tmp] = usuarios;
+                        tmp += 86400000;
                     }
-                    tmp += 86400000;
                     console.log(result);
+                    return result;
                 }
+                console.log(result);
                 console.log(`Fecha Inicial: ${fech} Fecha Final: ${fech2}`);
                 break;
         }
@@ -112,10 +130,10 @@ function fechas(init_date, end_date, by) {
 }
 
 
-fechas(1572880698375, 1575188196107, "day");
+//fechas(1572880698375, 1575188196107, "day");
 // fechas(1572880698375, 1587821812368, "week");
-// fechas(1572880698375, 1587821812368, "month");
-const fech = new  Date(1572880698375);
-const fech2 = new Date(1575188196107);
-console.log(fech);
-console.log(fech2);
+fechas(1572880698375, 1587821812368, "month");
+// const fech = new  Date(1572880698375);
+// const fech2 = new Date(1575188196107);
+// console.log(fech);
+// console.log(fech2);
